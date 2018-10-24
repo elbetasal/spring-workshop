@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd"
+        default-init-method="init"
+        default-destroy-method="destroy">
+
+    <!--<bean name="fileSystemStorageService"-->
+          <!--factory-method="createFileSystem"-->
+          <!--factory-bean="storageServiceLocator"-->
+          <!--scope="prototype"-->
+          <!--&gt;-->
+
+    <!--</bean>-->
+
+    <bean name="fileSystemStorageService"
+          class="org.developer.elbetasal.examples.FileSystemStorageService"
+          scope="prototype"
+    >
+
+    </bean>
+
+    <bean name="databaseStorageService"
+          factory-bean="storageServiceLocator"
+            factory-method="createDatabase">
+
+    </bean>
+
+    <bean id="storageServiceLocator" class="org.developer.elbetasal.examples.StorageServiceLocator"></bean>
+
+    <bean name="stockService " class="org.developer.elbetasal.examples.StockService" >
+        <constructor-arg name="googleStockService" ref="googleService"/>
+        <constructor-arg name="message" value="Hey"/>
+    </bean>
+
+    <bean name="googleService" class="org.developer.elbetasal.examples.GoogleStockService">
+        <constructor-arg name="stockService" ref="threslohd"/>
+    </bean>
+    <bean name="threslohd" class="org.developer.elbetasal.examples.ThresholdStockService"/>
+</beans>
