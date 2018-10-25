@@ -1,0 +1,14 @@
+version : '3'
+services:
+  mysql:
+    image: mysql/mysql-server:latest
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: "secret"
+      MYSQL_DATABASE: "spring-workshop"
+      MYSQL_USER: "mysql"
+      MYSQL_PASSWORD: "mysqlpassword"
+      TZ: "UTC"
+    volumes:
+      - ./db/:/docker-entrypoint-initdb.d
