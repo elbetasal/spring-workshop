@@ -4,16 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class GoogleStockService {
 
-	private ThresholdStockService stockService;
-
+	private ThresholdStockService thresholdStockService;
 
 	@Autowired
-	public GoogleStockService(ThresholdStockService thresholdStockService) {
-		this.stockService = thresholdStockService;
+	public void setThresholdStockService(ThresholdStockService thresholdStockService) {
+		this.thresholdStockService = thresholdStockService;
 	}
 
 	public void getGoogleStacks() {
-		System.out.println(String.format(" the limit %s" , stockService.getThreshold()));
+		System.out.println(String.format(" the limit %s" , thresholdStockService.getThreshold()));
 		System.out.println("Lamandado a google");
 	}
+
 }
