@@ -1,28 +1,32 @@
 package org.developer.elbetasal.examples.spring;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.*;
 
 public class InjectApp {
 
 	public static void main(String[] args) {
-		ApplicationContext applicationContext = new
-				ClassPathXmlApplicationContext("/beans.xml");
+		AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+		applicationContext.register(InjectAppConfig.class);
+		applicationContext.refresh();
+
+
 		StockService stockkService = applicationContext.getBean(StockService.class);
 		stockkService.getStocks();
+
+		applicationContext.registerShutdownHook();
+
 	}
 
 	@Configuration
+	@Import({MessageConfiguration.class , OtherConfig.class})
 	static class InjectAppConfig{
 
 		//<bean .....>
 
 		@Bean
-		public StockService stockService(GoogleStockService stockService) {
-			return new StockService(stockService);
+		public StockService stockService(GoogleStockService stockService,
+		                                 String message) {
+			return new StockService(stockService, message);
 		}
 
 		@Bean
@@ -45,6 +49,27 @@ public class InjectApp {
 		public ThresholdStockService thresholdStockService2(){
 			return new ThresholdStockService(Integer.MAX_VALUE);
 		}
+	}
+
+	@Configuration
+	static class MessageConfiguration {
+
+		@Bean
+		public String message() {
+			return "Hello ";
+		}
+
+	}
+
+	@Configuration
+	static class OtherConfig {
+
+		@Bean
+		@Primary
+		public String message2(){
+			return "Hola ";
+		}
+
 	}
 }
 
