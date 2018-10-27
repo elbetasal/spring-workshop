@@ -2,6 +2,9 @@ package org.developer.elbetasal.examples.spring;
 
 import org.springframework.context.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class InjectApp {
 
 	public static void main(String[] args) {
@@ -18,45 +21,33 @@ public class InjectApp {
 	}
 
 	@Configuration
+	@ComponentScan
 	@Import({MessageConfiguration.class , OtherConfig.class})
-	static class InjectAppConfig{
+	static class InjectAppConfig {
 
-		//<bean .....>
 
-		@Bean
-		public StockService stockService(GoogleStockService stockService,
-		                                 String message) {
-			return new StockService(stockService, message);
-		}
-
-		@Bean
-		public GoogleStockService googleStockService() {
-			return new GoogleStockService(thresholdStockService());
-		}
-
-		@Bean
-		@Primary
-		public GoogleStockService googleStockService2() {
-			return new GoogleStockService(thresholdStockService2());
-		}
-
-		@Bean
-		public ThresholdStockService thresholdStockService(){
-			return new ThresholdStockService(Integer.MIN_VALUE);
-		}
-
-		@Bean
-		public ThresholdStockService thresholdStockService2(){
-			return new ThresholdStockService(Integer.MAX_VALUE);
-		}
 	}
-
 	@Configuration
 	static class MessageConfiguration {
 
 		@Bean
 		public String message() {
 			return "Hello ";
+		}
+
+		@Bean
+		public Integer limit(){
+			return Integer.MAX_VALUE;
+		}
+
+
+		@Bean
+		public List<String> strings() {
+			List array = new ArrayList();
+			array.add("Hello");
+			array.add("Hello2");
+			array.add("Hello3");
+			return array;
 		}
 
 	}
