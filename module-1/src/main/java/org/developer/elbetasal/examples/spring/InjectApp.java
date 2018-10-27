@@ -1,5 +1,6 @@
-package org.developer.elbetasal.examples;
+package org.developer.elbetasal.examples.spring;
 
+import org.developer.elbetasal.examples.spring.StockService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

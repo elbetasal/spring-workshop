@@ -6,39 +6,6 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd"
-        default-init-method="init"
-        default-destroy-method="destroy">
-
-    <!--<bean name="fileSystemStorageService"-->
-          <!--factory-method="createFileSystem"-->
-          <!--factory-bean="storageServiceLocator"-->
-          <!--scope="prototype"-->
-          <!--&gt;-->
-
-    <!--</bean>-->
-
-    <bean name="fileSystemStorageService"
-          class="org.developer.elbetasal.examples.FileSystemStorageService"
-    >
-
-    </bean>
-
-    <bean name="databaseStorageService"
-            class="org.developer.elbetasal.examples.DatabaseStorageService">
-
-    </bean>
-    
-    <bean name="stockService " 
-          class="org.developer.elbetasal.examples.StockService" >
-    </bean>
-
-    <bean name="googleService" 
-          class="org.developer.elbetasal.examples.GoogleStockService">
-    </bean>
-    <bean name="thresholdStockService"
-          class="org.developer.elbetasal.examples.ThresholdStockService"/>
-    <bean name="threslohd2"
-          class="org.developer.elbetasal.examples.ThresholdStockService"/>
-
-    <context:annotation-config />
+        >
+    <context:component-scan base-package="org.developer.elbetasal.examples.spring"/>
 </beans>
