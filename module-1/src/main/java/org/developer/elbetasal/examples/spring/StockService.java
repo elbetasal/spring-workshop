@@ -7,20 +7,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class StockService {
 
-	private final GoogleStockService googleStockService;
+	private final StockExternalService stockExternalService;
 
 	private final String message;
 
 	@Autowired
-	public StockService(GoogleStockService googleStockService, String message) {
-		this.googleStockService = googleStockService;
+	public StockService(StockExternalService stockExternalService, String message) {
+		this.stockExternalService = stockExternalService;
 		this.message = message;
 	}
 
 
 	public void getStocks() {
 		System.out.println("Getting stocks from third party "+ message);
-		googleStockService.getGoogleStacks();
+		stockExternalService.getStocks();
 	}
 
 }
