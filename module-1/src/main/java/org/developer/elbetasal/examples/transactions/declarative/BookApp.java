@@ -20,10 +20,15 @@ public class BookApp {
 		BookRepository bookRepository = applicationContext.getBean(BookRepository.class);
 		bookRepository.createBook(Book
 				.builder()
-				.name("Test")
+				.name("FAIL")
 				.isbn("ISBN")
 				.build());
 
+		bookRepository.createBook(Book
+				.builder()
+				.name("FMAT")
+				.isbn("ISBN")
+				.build());
 		bookRepository
 				.findAllBooks()
 				.stream()

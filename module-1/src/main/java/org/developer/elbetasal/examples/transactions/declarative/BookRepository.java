@@ -30,11 +30,17 @@ public class BookRepository {
 	public Book createBook(Book book){
 		TransactionDefinition def = new DefaultTransactionDefinition();
 		TransactionStatus status = dataSourceTransactionManager.getTransaction(def);
+		System.out.println("Completado ? " + status.isCompleted());
+		System.out.println("Nueva ? " + status.isNewTransaction());
 		String sql = "insert into books (name , isbn) values (:name , :isbn)";
 		try{
 			template.update(sql , new MapSqlParameterSource("name" , book.getName())
 					.addValue("isbn", book.getIsbn()));
+			if( book.getName().equalsIgnoreCase("FAIL")){
+				throw new RuntimeException();
+			}
 			dataSourceTransactionManager.commit(status);
+			System.out.println("Completado ? " + status.isCompleted());
 		}catch (Exception exception){
 			dataSourceTransactionManager.rollback(status);
 		}
