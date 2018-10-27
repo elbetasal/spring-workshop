@@ -1,6 +1,7 @@
 package org.developer.elbetasal.examples.spring;
 
 import org.springframework.context.annotation.*;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class InjectApp {
 
 	@Configuration
 	@ComponentScan
+	@PropertySource("classpath:application.properties")
 	@Import({MessageConfiguration.class , OtherConfig.class})
 	static class InjectAppConfig {
 
@@ -36,12 +38,6 @@ public class InjectApp {
 		}
 
 		@Bean
-		public Integer limit(){
-			return Integer.MAX_VALUE;
-		}
-
-
-		@Bean
 		public List<String> strings() {
 			List array = new ArrayList();
 			array.add("Hello");
@@ -50,6 +46,12 @@ public class InjectApp {
 			return array;
 		}
 
+		@Bean
+		public PropertySourcesPlaceholderConfigurer propertPlaceHolderConfiguer() {
+
+			return new PropertySourcesPlaceholderConfigurer();
+
+		}
 	}
 
 	@Configuration
