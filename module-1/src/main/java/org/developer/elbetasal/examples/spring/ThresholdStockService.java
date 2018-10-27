@@ -1,11 +1,13 @@
 package org.developer.elbetasal.examples.spring;
 
-
-import java.util.Random;
-
 public class ThresholdStockService {
+		private final int threadshold;
 
-		public Integer getThreshold(){
-			return new Random().nextInt();
+	public ThresholdStockService(int threadshold) {
+		this.threadshold = threadshold;
+	}
+
+	public Integer getThreshold(){
+			return threadshold;
 		}
 }
