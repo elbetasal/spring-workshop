@@ -1,7 +1,8 @@
 package org.developer.elbetasal.examples.spring;
 
-import org.developer.elbetasal.examples.spring.StockService;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class InjectApp {
@@ -13,5 +14,26 @@ public class InjectApp {
 		stockkService.getStocks();
 	}
 
+	@Configuration
+	static class InjectAppConfig{
+
+		//<bean .....>
+
+		@Bean
+		public StockService stockService() {
+			return new StockService(googleStockService());
+		}
+
+		@Bean
+		public GoogleStockService googleStockService() {
+			return new GoogleStockService(thresholdStockService());
+		}
+
+		@Bean
+		public ThresholdStockService thresholdStockService(){
+			return new ThresholdStockService();
+		}
+
+	}
 }
 
