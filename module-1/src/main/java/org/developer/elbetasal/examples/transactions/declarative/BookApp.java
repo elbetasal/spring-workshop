@@ -7,6 +7,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
@@ -18,11 +19,14 @@ public class BookApp {
 		applicationContext.refresh();
 
 		BookRepository bookRepository = applicationContext.getBean(BookRepository.class);
-		bookRepository.createBook(Book
-				.builder()
-				.name("FAIL")
-				.isbn("ISBN")
-				.build());
+		try{
+			bookRepository.createBook(Book
+					.builder()
+					.name("FAIL")
+					.isbn("ISBN")
+					.build());
+		}catch (Exception e){}
+
 
 		bookRepository.createBook(Book
 				.builder()
@@ -39,6 +43,7 @@ public class BookApp {
 	@Configuration
 	@PropertySource("classpath:jdbc.properties")
 	@ComponentScan
+	@EnableTransactionManagement
 	static class BookAppConfiguration {
 
 		@Autowired
