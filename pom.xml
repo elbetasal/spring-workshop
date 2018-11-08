@@ -15,6 +15,7 @@
 
     <modules>
         <module>module-1</module>
+        <module>module-2</module>
     </modules>
     <dependencyManagement>
         <dependencies>
@@ -45,9 +46,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
                 <configuration>
                     <source>8</source>
                     <target>8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <warSourceDirectory>src/main/webapp</warSourceDirectory>
                 </configuration>
             </plugin>
         </plugins>
