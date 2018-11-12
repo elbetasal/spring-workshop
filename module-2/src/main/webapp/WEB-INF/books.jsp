@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Simple JSP Application</title>
+    <title>Books Store</title>
 </head>
 <body>
 <h1>
-    Available Brands
+    Available Books
 </h1>
 <%
     List result= (List) request.getAttribute("books");

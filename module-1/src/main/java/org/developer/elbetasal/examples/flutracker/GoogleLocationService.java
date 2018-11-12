@@ -8,14 +8,16 @@ import java.util.Optional;
 import com.google.common.collect.ImmutableSet;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
-import com.google.maps.errors.ApiException;
 import com.google.maps.model.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import static com.google.common.collect.Sets.newHashSet;
 
 @Service
+@Slf4j
 public class GoogleLocationService {
 
 	private static final Collection<AddressComponentType> ADDRESS_COMPONENT_TYPE_FOR_COUNTRY =
@@ -28,14 +30,16 @@ public class GoogleLocationService {
 			ImmutableSet.of(AddressType.ADMINISTRATIVE_AREA_LEVEL_1, AddressType.POLITICAL);
 	private final GeoApiContext geoApiContext;
 
-	public GoogleLocationService() {
+	public GoogleLocationService(@Value("${google.api.key}")
+			                             String apiKey) {
 		geoApiContext =new GeoApiContext.Builder()
-				.apiKey("AIzaSyA0dUoRLqEFe0Q_g2dH7xG3fyVRJgzpORk")
+				.apiKey(apiKey)
 				.disableRetries()
 				.build();
 	}
 
 	public Optional<Location> getLocation(float latitude , float longitude){
+		log.info("Calling get location with {} {} ", latitude , longitude);
 		Optional<Location> location = Optional.empty();
 		LatLng latLong = new LatLng(latitude , longitude);
 		try {
@@ -55,7 +59,7 @@ public class GoogleLocationService {
 
 						if(isAddressComponentOfTypeOfState(addressComponent)){
 							stateName = addressComponent.longName ;
-							stateShortName = addressComponent.shortName;
+							stateShortName = addressComponent.shortName.replace("." , "");
 						}
 
 						if (isAddressComponentOfTypeCountry(addressComponent)) {
@@ -79,7 +83,7 @@ public class GoogleLocationService {
 					}
 				}
 			}
-		} catch (ApiException | InterruptedException | IOException e) {
+		} catch (Exception e) {
 		}
 		return location;
 	}

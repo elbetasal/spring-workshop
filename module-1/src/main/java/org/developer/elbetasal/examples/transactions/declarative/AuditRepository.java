@@ -9,18 +9,17 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.sql.DataSource;
 
 @Repository
-public class AnotherBookRepository {
+public class AuditRepository {
 
 	private final NamedParameterJdbcTemplate template;
 
-	public AnotherBookRepository(DataSource dataSource) {
+	public AuditRepository(DataSource dataSource) {
 		this.template = new NamedParameterJdbcTemplate(dataSource);
 	}
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW , rollbackFor = RuntimeException.class)
-	public void saveAnotherBook() {
-		String sql = "insert into books (name , isbn) values (:name , :isbn)";
-		template.update(sql , new MapSqlParameterSource("name" , "Probando")
-				.addValue("isbn", "ISBN"));
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void audit(String message) {
+		String sql = "insert into auditoria (descripcion) values (:descripcion)";
+		template.update(sql, new MapSqlParameterSource("descripcion", message));
 	}
 }

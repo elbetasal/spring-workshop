@@ -17,7 +17,7 @@ public class FluTrackService {
 	@Autowired
 	private GoogleLocationService googleLocationService;
 
-	public List<FluPatient> getAllPatientsWithSoreThroat() {
+	public List<FluPatient> getAllPatientsWithHeadache() {
 		final String url ="http://api.flutrack.org/?s=headache&&limit=1";
 		return Arrays.asList(restTemplate.getForObject(url , FluPatient[].class))
 				.stream()

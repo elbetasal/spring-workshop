@@ -12,7 +12,7 @@ public class FluApp {
 
 
 		applicationContext.getBean(FluTrackService.class)
-				.getAllPatientsWithSoreThroat()
+				.getAllPatientsWithHeadache()
 				.stream().forEach(System.out::println);
 
 		applicationContext.registerShutdownHook();

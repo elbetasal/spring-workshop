@@ -22,17 +22,19 @@ public class BookApp {
 		try{
 			bookRepository.createBook(Book
 					.builder()
-					.name("FAIL")
+					.name("Harry Potter")
 					.isbn("ISBN")
 					.build());
 		}catch (Exception e){}
 
+		try{
+			bookRepository.createBook(Book
+					.builder()
+					.name("FMAT")
+					.isbn("ISBN")
+					.build());
+		}catch (Exception e){}
 
-		bookRepository.createBook(Book
-				.builder()
-				.name("FMAT")
-				.isbn("ISBN")
-				.build());
 		bookRepository
 				.findAllBooks()
 				.stream()

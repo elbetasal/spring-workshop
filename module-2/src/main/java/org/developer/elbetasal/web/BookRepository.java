@@ -1,9 +1,12 @@
 package org.developer.elbetasal.web;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Repository
 public class BookRepository {
 
 	public List<Book> findAllBooks(){

@@ -14,36 +14,25 @@ public class BookRepository {
 
 	private final NamedParameterJdbcTemplate template;
 
-	private final AnotherBookRepository anotherBookRepository;
+	private final AuditRepository auditRepository;
 
 
 	public BookRepository(DataSource dataSource,
-	                      AnotherBookRepository anotherBookRepository) {
+	                      AuditRepository auditRepository) {
 		this.template = new NamedParameterJdbcTemplate(dataSource);
-		this.anotherBookRepository = anotherBookRepository;
+		this.auditRepository = auditRepository;
 	}
 
-	@Transactional(rollbackFor = TransactionalTestException.class)
+	@Transactional(noRollbackFor = AuditException.class)
 	public Book createBook(Book book){
 		String sql = "insert into books (name , isbn) values (:name , :isbn)";
-		try{
 			template.update(sql , new MapSqlParameterSource("name" , book.getName())
 					.addValue("isbn", book.getIsbn()));
+			auditRepository.audit(String.format("Insertando book con %s %s" , book.getName() , book.getIsbn()));
 			if( book.getName().equalsIgnoreCase("FAIL")){
 				throw new RuntimeException();
 			}
-			anotherBookRepository.saveAnotherBook();
-		}catch (Exception exception){
-			throw new TransactionalTestException();
-		}
 		return book;
-	}
-
-	@Transactional(propagation = Propagation.REQUIRES_NEW , rollbackFor = RuntimeException.class)
-	void saveAnotherBook() {
-		String sql = "insert into books (name , isbn) values (:name , :isbn)";
-		template.update(sql , new MapSqlParameterSource("name" , "Probando")
-				.addValue("isbn", "ISBN"));
 	}
 
 
